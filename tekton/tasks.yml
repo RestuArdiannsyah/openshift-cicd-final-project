@@ -3,13 +3,16 @@ kind: Task
 metadata:
   name: cleanup-and-test
 spec:
+  workspaces:
+    - name: source
   steps:
     - name: cleanup
       image: alpine
       script: |
         rm -rf $(workspaces.source.path)/*
-    - name: run-tests
-      image: python:3.8
+    - name: nose-test
+      image: python:3.9-slim
+      workingDir: $(workspaces.source.path)
       script: |
         pip install nose
         nosetests

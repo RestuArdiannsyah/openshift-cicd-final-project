@@ -1,10 +1,14 @@
-name: CI Workflow
-on: [push, pull_request]
+name: CI Pipeline
+on: [push]
 jobs:
-  build:
+  lint-and-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
       - name: Install dependencies
         run: pip install flake8 nose
       - name: Lint with flake8
